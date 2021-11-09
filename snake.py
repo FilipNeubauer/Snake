@@ -157,20 +157,34 @@ def run_game():
         if direction == "left":
             new_head = (snake[0][0] - 1, snake[0][1])
             snake.insert(0, new_head)
-            snake.pop()
+            if snake[0] == apple_cor:
+                apple_cor = get_random_location()
+            else:
+                snake.pop()
         if direction == "right":
             new_head = (snake[0][0] + 1, snake[0][1])
             snake.insert(0, new_head)
-            snake.pop()
+            if snake[0] == apple_cor:
+                apple_cor = get_random_location()
+            else:
+                snake.pop()
         if direction == "up":
             new_head = (snake[0][0], snake[0][1] - 1)
             snake.insert(0, new_head)
-            snake.pop()
+            if snake[0] == apple_cor:
+                apple_cor = get_random_location()
+            else:
+                snake.pop()
         if direction == "down":
             new_head = (snake[0][0], snake[0][1] + 1)
             snake.insert(0, new_head)
-            snake.pop()
+            if snake[0] == apple_cor:
+                apple_cor = get_random_location()
+            else:
+                snake.pop()
         
+
+
         
 
 
