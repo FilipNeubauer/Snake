@@ -15,8 +15,8 @@ WINDOWHEIGHT = 480
 CELLSIZE = 20
 assert WINDOWWIDTH % CELLSIZE == 0, 'Window width must be a multiple of cell size.'
 assert WINDOWHEIGHT % CELLSIZE == 0, 'Window height must be a multiple of cell size.'
-NUM_CELLS_X = WINDOWHEIGHT//CELLSIZE  # TODO done
-NUM_CELLS_Y = WINDOWWIDTH//CELLSIZE  # TODO done
+NUM_CELLS_X = WINDOWWIDTH//CELLSIZE  # TODO done
+NUM_CELLS_Y = WINDOWHEIGHT//CELLSIZE  # TODO done
 
 BGCOLOR = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -37,7 +37,8 @@ def main():
     pygame.display.set_caption('Snake')
     BASICFONT = pygame.font.Font('freesansbold.ttf', 20)
 
-
+    show_start_screen()
+    run_game()
     
 
 
@@ -126,36 +127,51 @@ def run_game():
     snake, direction = get_new_snake()
     apple_cor = get_random_location()
 
+    print(snake)
+    print(apple_cor)
+    print(NUM_CELLS_Y)
+
     while True:
+
+        pygame.display.update()
+        FPS_CLOCK.tick(FPS)
+
+        draw_game_state(snake, apple_cor)
 
 
         for event in pygame.event.get():
-            if event.type == KEYUP:
+            if event.type == QUIT:
+                terminate()
+
+            if event.type == KEYDOWN:
                 if event.key == K_LEFT and direction != "right":
                     direction = "left"
-                elif event.key == K_RIGHT and direction != "left":
+                if event.key == K_RIGHT and direction != "left":
                     direction = "right"
-                elif event.key == K_UP and direction != "down":
-                    direction == "up"
-                elif event.key == K_DOWN and direction != "up":
+                if event.key == K_UP and direction != "down":
+                    direction = "up"
+                if event.key == K_DOWN and direction != "up":
                     direction = "down"
+                
 
         if direction == "left":
             new_head = (snake[0][0] - 1, snake[0][1])
             snake.insert(0, new_head)
             snake.pop()
-        elif direction == "right":
+        if direction == "right":
             new_head = (snake[0][0] + 1, snake[0][1])
             snake.insert(0, new_head)
             snake.pop()
-        elif direction == "up":
+        if direction == "up":
             new_head = (snake[0][0], snake[0][1] - 1)
             snake.insert(0, new_head)
             snake.pop()
-        elif direction == "down":
+        if direction == "down":
             new_head = (snake[0][0], snake[0][1] + 1)
             snake.insert(0, new_head)
             snake.pop()
+        
+        
 
 
 def draw_game_state(snake, apple):
