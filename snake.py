@@ -183,7 +183,16 @@ def run_game():
             else:
                 snake.pop()
         
-
+        if snake[0] in snake[1:]:
+            break
+        if snake[0][0] > NUM_CELLS_X:
+            break
+        if snake[0][0] < 0:
+            break
+        if snake[0][1] > NUM_CELLS_Y:
+            break
+        if snake[0][1] < 0:
+            break
 
         
 
