@@ -38,9 +38,9 @@ def main():
     BASICFONT = pygame.font.Font('freesansbold.ttf', 20)
 
     show_start_screen()
-    run_game()
-    
-
+    while True:
+        run_game()
+        show_game_over_screen()
 
 
 def terminate():
@@ -76,7 +76,6 @@ def wait_for_key_pressed():
             if was_key_pressed(event):
                 print("Break")
                 true = False
-
 
 
 def show_start_screen():
@@ -116,7 +115,6 @@ def get_new_snake():
     return cor, "right"
 
 
-
 def get_random_location():
     """Return a random cell on the game plan."""
     return random.randint(0, NUM_CELLS_X-1), random.randint(0, NUM_CELLS_Y-1)
@@ -131,18 +129,18 @@ def run_game():
     print(apple_cor)
     print(NUM_CELLS_Y)
 
-    while True:
+    true = True
+
+    while true:
 
         pygame.display.update()
         FPS_CLOCK.tick(FPS)
 
         draw_game_state(snake, apple_cor)
 
-
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
-
             if event.type == KEYDOWN:
                 if event.key == K_LEFT and direction != "right":
                     direction = "left"
@@ -153,7 +151,6 @@ def run_game():
                 if event.key == K_DOWN and direction != "up":
                     direction = "down"
                 
-
         if direction == "left":
             new_head = (snake[0][0] - 1, snake[0][1])
             snake.insert(0, new_head)
@@ -184,17 +181,15 @@ def run_game():
                 snake.pop()
         
         if snake[0] in snake[1:]:
-            break
+            true = False
         if snake[0][0] > NUM_CELLS_X:
-            break
+            true = False
         if snake[0][0] < 0:
-            break
+            true = False
         if snake[0][1] > NUM_CELLS_Y:
-            break
+            true = False
         if snake[0][1] < 0:
-            break
-
-        
+            true = False
 
 
 def draw_game_state(snake, apple):
